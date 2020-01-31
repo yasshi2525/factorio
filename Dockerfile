@@ -13,7 +13,11 @@ RUN curl -sSL https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
     apk add --no-cache /tmp/glibc-2.30-r0.apk && \
     rm -f /etc/apk/keys/sgerrand.rsa.pub /tmp/glibc-2.30-r0.apk
 
-RUN addgroup factorio && adduser -G factorio -DH factorio
+ARG UID=1000
+ARG GID=1000
+
+RUN addgroup -g ${GID} factorio && \
+    adduser -u ${UID} -G factorio -DH factorio
 
 RUN curl -sSL https://www.factorio.com/get-download/$VERSION/headless/linux64 \
          -o /tmp/factorio.tar.xz && \
