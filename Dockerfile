@@ -18,11 +18,14 @@ RUN addgroup factorio && adduser -G factorio -DH factorio
 RUN curl -sSL https://www.factorio.com/get-download/$VERSION/headless/linux64 \
          -o /tmp/factorio.tar.xz && \
     tar xf /tmp/factorio.tar.xz && \
+    mkdir ./factorio/saves && \
     chown -R factorio:factorio ./factorio && \
     rm -f /tmp/factorio.tar.xz
 
 WORKDIR /usr/local/factorio
 COPY --chown=factorio:factorio ./docker-entrypoint.sh .
+
+RUN chmod u+x ./docker-entrypoint.sh
 
 USER factorio
 
